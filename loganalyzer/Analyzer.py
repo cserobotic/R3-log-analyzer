@@ -45,7 +45,7 @@ class Analyzer:
         self.regions.append(Region((17.5, 11), (52.5, 34), "I"))
 
         # Right TEAM
-        self.status_r = 0  # Winner' 'Loser' 'Draw'
+        self.status_r = ''  # Winner' 'Loser' 'Draw'
         self.pass_r = 0
         self.intercept_r = 0
         self.pass_in_length_r = 0
@@ -65,7 +65,7 @@ class Analyzer:
         self.av_st_per_dist_10p_r = 0
 
         # Left TEAM
-        self.status_l = 0  # Winner' 'Loser' 'Draw'
+        self.status_l = ''  # Winner' 'Loser' 'Draw'
         self.pass_l = 0
         self.intercept_l = 0
         self.pass_in_length_l = 0

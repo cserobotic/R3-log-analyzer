@@ -25,17 +25,25 @@ for filename in os.listdir(sys.argv[1]):
     team_r = {
         "name" : analyzer.game.right_team.name,
         "status" : analyzer.status_r,
-        "ally goals" : analyzer.game.right_goal,
-        "opp goals" : analyzer.game.left_goal,
-        "possession" : analyzer.possession_r
+        "ally_goals" : analyzer.game.right_goal,
+        "opp_goals" : analyzer.game.left_goal,
+        "possession" : analyzer.possession_r,
+        "pass_accuracy" : analyzer.pass_accuracy_r,
+        "correct_pass" : analyzer.pass_r,
+        "wrong_pass" : analyzer.intercept_l,
+        "on_target_shoot:" : analyzer.on_target_shoot_r
     }
 
     team_l = {
         "name" : analyzer.game.left_team.name,
         "status" : analyzer.status_l,
-        "ally goals" : analyzer.game.left_goal,
-        "opp goals" : analyzer.game.right_goal,
-        "possession" : analyzer.possession_l
+        "ally_goals" : analyzer.game.left_goal,
+        "opp_goals" : analyzer.game.right_goal,
+        "possession" : analyzer.possession_l,
+        "pass_accuracy" : analyzer.pass_accuracy_l,
+        "correct_pass" : analyzer.pass_l,
+        "wrong_pass" : analyzer.intercept_r,
+        "on_target_shoot" : analyzer.on_target_shoot_l
     }
 
     if( flag and len(sys.argv)<=2):
@@ -60,21 +68,30 @@ for filename in os.listdir(sys.argv[1]):
     if( team_l['status']=='Winner' ):
         win_cnt += 1
 
+    print("True Pass:"+str(analyzer.pass_r))
+    print("Wrong Pass:"+str(analyzer.intercept_l))
     print("Right Team :"+analyzer.game.right_team.name + "\n")
     print("Game result :"+analyzer.status_r)
     print("Goals :"+str(analyzer.game.right_goal))
     print("Possession:"+str(analyzer.possession_r))
+    print("Pass Accuracy:"+str(analyzer.pass_accuracy_r))
+    print("on_target_shoot:"+str(analyzer.on_target_shoot_r))
+    print('\n')
 
+    print("True Pass:"+str(analyzer.pass_l))
+    print("Wrong Pass:"+str(analyzer.intercept_r))
     print("Left Team :"+analyzer.game.left_team.name+"\n")
     print("Game result :"+analyzer.status_l)
     print("Goals :"+str(analyzer.game.left_goal))
     print("Possession:"+str(analyzer.possession_l))
+    print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
+    print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
-our_goals_avg  = df['ally goals'].mean()
-opp_goals_avg  = df['opp goals'].mean()
+our_goals_avg  = df['ally_goals'].mean()
+opp_goals_avg  = df['opp_goals' ].mean()
 possession_avg = df['possession'].mean()
-our_goals_var  = df['ally goals'].var()
-opp_goals_var  = df['opp goals'].var()
+our_goals_var  = df['ally_goals'].var()
+opp_goals_var  = df['opp_goals' ].var()
 possession_var = df['possession'].var()
 winrate = win_cnt/ctr
 
@@ -88,12 +105,10 @@ print('winrate        = ', winrate)
 
 df.to_csv(sys.argv[1]+'\\summary.csv')
 
-    # print("True Pass:"+str(analyzer.pass_r))
-    # print("Wrong Pass:"+str(analyzer.intercept_l))
+    
     # print("Pass in Lenght:"+str(analyzer.pass_in_length_r))
     # print("Pass in Width:"+str(analyzer.pass_in_width_r))
-    # print("Pass Accuracy:"+str(analyzer.pass_accuracy_r))
-    # print("on_target_shoot:"+str(analyzer.on_target_shoot_r))
+    
     # print("off_target_shoot:"+str(analyzer.off_target_shoot_r))
     # print("Shoot in Lenght:"+str(analyzer.shoot_in_length_r))
     # print("Shoot in Width:"+str(analyzer.shoot_in_width_r))
@@ -111,8 +126,7 @@ df.to_csv(sys.argv[1]+'\\summary.csv')
     # print("Wrong Pass:"+str(analyzer.intercept_r))
     # print("Pass in Lenght:"+str(analyzer.pass_in_length_l))
     # print("Pass in Width:"+str(analyzer.pass_in_width_l))
-    # print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
-    # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
+    
     # print("off_target_shoot:"+str(analyzer.off_target_shoot_l))
     # print("Shoot in Lenght:"+str(analyzer.shoot_in_length_l))
     # print("Shoot in Width:"+str(analyzer.shoot_in_width_l))
