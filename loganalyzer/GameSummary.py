@@ -2,25 +2,30 @@
 import os
 import sys
 import pandas as pd
+from sh import gunzip
 from loganalyzer.Parser import *
 from loganalyzer.Game import *
 from loganalyzer.Analyzer import *
 
-flag=True
+is_first_iteration=True
 TEAM_NAME=''
 
 
 df = pd.DataFrame()
 win_cnt=0
-ctr = 0
-print(sys.argv)
+ctr = 1
+# print(sys.argv)
 for filename in os.listdir(sys.argv[1]):
+    
+    print('file number:', ctr)
+
     if(filename[-3:]=='.gz'):
-        print(sys.argv[1]+filename[:-7])
-        parser = Parser(sys.argv[1]+filename[:-7])
+        # print(sys.argv[1]+'/'+filename[:-7])
+        gunzip(sys.argv[1]+'/'+filename)
+        parser = Parser(sys.argv[1]+'/'+filename[:-7])
     else:    
-        print(sys.argv[1]+filename[:-4])
-        parser = Parser(sys.argv[1]+filename[:-4])
+        # print(sys.argv[1]+'/'+filename[:-4])
+        parser = Parser(sys.argv[1]+'/'+filename[:-4])
     game = Game(parser)
     analyzer = Analyzer(game)
     analyzer.analyze()
@@ -49,7 +54,7 @@ for filename in os.listdir(sys.argv[1]):
         "on_target_shoot" : analyzer.on_target_shoot_l
     }
 
-    if( flag and len(sys.argv)<=2):
+    if( is_first_iteration and len(sys.argv)<=2):
         TEAM_NAME = team_l['name']
 
     if( len(sys.argv)>2 and team_r['name']==sys.argv[2] ):
@@ -58,12 +63,12 @@ for filename in os.listdir(sys.argv[1]):
     elif( team_r['name']==TEAM_NAME ):
         team_l,team_r = team_r,team_l
 
-    if( not flag ):
-        df.iloc[ctr] = pd.Series(team_l)
+    if( not is_first_iteration ):
+        pd.concat([df, pd.Series(team_l)], axis=0)
         ctr += 1
 
-    if( flag ):
-        flag = False
+    if( is_first_iteration ):
+        is_first_iteration = False
         df = pd.DataFrame([team_l])
         ctr += 1
 
@@ -71,24 +76,24 @@ for filename in os.listdir(sys.argv[1]):
     if( team_l['status']=='Winner' ):
         win_cnt += 1
 
-    print("True Pass:"+str(analyzer.pass_r))
-    print("Wrong Pass:"+str(analyzer.intercept_l))
-    print("Right Team :"+analyzer.game.right_team.name + "\n")
-    print("Game result :"+analyzer.status_r)
-    print("Goals :"+str(analyzer.game.right_goal))
-    print("Possession:"+str(analyzer.possession_r))
-    print("Pass Accuracy:"+str(analyzer.pass_accuracy_r))
-    print("on_target_shoot:"+str(analyzer.on_target_shoot_r))
-    print('\n')
+    # print("True Pass:"+str(analyzer.pass_r))
+    # print("Wrong Pass:"+str(analyzer.intercept_l))
+    # print("Right Team :"+analyzer.game.right_team.name + "\n")
+    # print("Game result :"+analyzer.status_r)
+    # print("Goals :"+str(analyzer.game.right_goal))
+    # print("Possession:"+str(analyzer.possession_r))
+    # print("Pass Accuracy:"+str(analyzer.pass_accuracy_r))
+    # print("on_target_shoot:"+str(analyzer.on_target_shoot_r))
+    # print('\n')
 
-    print("True Pass:"+str(analyzer.pass_l))
-    print("Wrong Pass:"+str(analyzer.intercept_r))
-    print("Left Team :"+analyzer.game.left_team.name+"\n")
-    print("Game result :"+analyzer.status_l)
-    print("Goals :"+str(analyzer.game.left_goal))
-    print("Possession:"+str(analyzer.possession_l))
+    # print("True Pass:"+str(analyzer.pass_l))
+    # print("Wrong Pass:"+str(analyzer.intercept_r))
+    # print("Left Team :"+analyzer.game.left_team.name+"\n")
+    # print("Game result :"+analyzer.status_l)
+    # print("Goals :"+str(analyzer.game.left_goal))
+    # print("Possession:"+str(analyzer.possession_l))
     print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
-    print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
+    # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
 our_goals_avg  = df['ally_goals'].mean()
 opp_goals_avg  = df['opp_goals' ].mean()
