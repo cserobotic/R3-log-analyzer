@@ -15,9 +15,12 @@ win_cnt=0
 ctr = 0
 print(sys.argv)
 for filename in os.listdir(sys.argv[1]):
-
-    print(sys.argv[1]+filename[:-4])
-    parser = Parser(sys.argv[1]+filename[:-4])
+    if(filename[-3:]=='.gz'):
+        print(sys.argv[1]+filename[:-7])
+        parser = Parser(sys.argv[1]+filename[:-7])
+    else:    
+        print(sys.argv[1]+filename[:-4])
+        parser = Parser(sys.argv[1]+filename[:-4])
     game = Game(parser)
     analyzer = Analyzer(game)
     analyzer.analyze()
