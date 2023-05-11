@@ -10,7 +10,6 @@ from loganalyzer.Analyzer import *
 is_first_iteration=True
 TEAM_NAME=''
 
-
 df = pd.DataFrame()
 win_cnt=0
 ctr = 1
@@ -95,21 +94,36 @@ for filename in os.listdir(sys.argv[1]):
     print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
     # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
-our_goals_avg  = df['ally_goals'].mean()
-opp_goals_avg  = df['opp_goals' ].mean()
-possession_avg = df['possession'].mean()
-our_goals_var  = df['ally_goals'].var()
-opp_goals_var  = df['opp_goals' ].var()
-possession_var = df['possession'].var()
+our_goals_avg       = df['ally_goals'   ].mean()
+opp_goals_avg       = df['opp_goals'    ].mean()
+possession_avg      = df['possession'   ].mean()
+correct_pass_avg    = df['correct_pass' ].mean()
+wrong_pass_avg      = df['wrong_pass'   ].mean()
+pass_accuracy_avg   = df['pass_accuracy'].mean()
+our_goals_var       = df['ally_goals'   ].var()
+opp_goals_var       = df['opp_goals'    ].var()
+possession_var      = df['possession'   ].var()
+correct_pass_var    = df['correct_pass' ].var()
+wrong_pass_var      = df['wrong_pass'   ].var()
+pass_accuracy_var   = df['pass_accuracy'].var()
+
+"correct_pass" : analyzer.pass_l,
+        "wrong_pass" : analyzer.intercept_r,
 winrate = win_cnt/ctr
 
-print('our_goals_avg  = ', our_goals_avg)
-print('opp_goals_avg  = ', opp_goals_avg)
-print('possession_avg = ', possession_avg)
-print('our_goals_var  = ', our_goals_var)
-print('opp_goals_var  = ', opp_goals_var)
-print('possession_var = ', possession_var)
-print('winrate        = ', winrate)
+print('our_goals_avg     = ', our_goals_avg    )
+print('opp_goals_avg     = ', opp_goals_avg    )
+print('possession_avg    = ', possession_avg   )
+print('correct_pass_avg  = ', correct_pass_avg )
+print('wrong_pass_avg    = ', wrong_pass_avg   )
+print('pass_accuracy_avg = ', pass_accuracy_avg)
+print('our_goals_var     = ', our_goals_var    )
+print('opp_goals_var     = ', opp_goals_var    )
+print('possession_var    = ', possession_var   )
+print('correct_pass_var  = ', correct_pass_var )
+print('wrong_pass_var    = ', wrong_pass_var   )
+print('pass_accuracy_var = ', pass_accuracy_var)
+print('winrate           = ', winrate)
 
 df.to_csv(sys.argv[1]+'\\summary.csv')
 
