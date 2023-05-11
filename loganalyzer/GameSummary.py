@@ -7,125 +7,124 @@ from loganalyzer.Parser import *
 from loganalyzer.Game import *
 from loganalyzer.Analyzer import *
 
-is_first_iteration=True
-TEAM_NAME=''
+for myargs in sys.argv[1:]:
+    is_first_iteration=True
+    TEAM_NAME=''
 
-df = pd.DataFrame()
-win_cnt=0
-ctr = 1
-# print(sys.argv)
-for filename in os.listdir(sys.argv[1]):
+    df = pd.DataFrame()
+    win_cnt=0
+    ctr = 1
+    # print(sys.argv)
+    for filename in os.listdir(myargs):
+        
+        print('file number:', ctr)
+
+        if(filename[-3:]=='.gz'):
+            # print(myargs+'/'+filename[:-7])
+            gunzip(myargs+'/'+filename)
+            parser = Parser(myargs+'/'+filename[:-7])
+        else:    
+            # print(myargs+'/'+filename[:-4])
+            parser = Parser(myargs+'/'+filename[:-4])
+        game = Game(parser)
+        analyzer = Analyzer(game)
+        analyzer.analyze()
+
+        team_r = {
+            "name" : analyzer.game.right_team.name,
+            "status" : analyzer.status_r,
+            "ally_goals" : analyzer.game.right_goal,
+            "opp_goals" : analyzer.game.left_goal,
+            "possession" : analyzer.possession_r,
+            "pass_accuracy" : analyzer.pass_accuracy_r,
+            "correct_pass" : analyzer.pass_r,
+            "wrong_pass" : analyzer.intercept_l,
+            "on_target_shoot:" : analyzer.on_target_shoot_r
+        }
+
+        team_l = {
+            "name" : analyzer.game.left_team.name,
+            "status" : analyzer.status_l,
+            "ally_goals" : analyzer.game.left_goal,
+            "opp_goals" : analyzer.game.right_goal,
+            "possession" : analyzer.possession_l,
+            "pass_accuracy" : analyzer.pass_accuracy_l,
+            "correct_pass" : analyzer.pass_l,
+            "wrong_pass" : analyzer.intercept_r,
+            "on_target_shoot" : analyzer.on_target_shoot_l
+        }
+
+        if( is_first_iteration and len(sys.argv)<=2):
+            TEAM_NAME = team_l['name']
+
+        if( len(sys.argv)>2 and team_r['name']==sys.argv[2] ):
+            team_l,team_r = team_r,team_l
+
+        elif( team_r['name']==TEAM_NAME ):
+            team_l,team_r = team_r,team_l
+
+        if( not is_first_iteration ):
+            pd.concat([df, pd.Series(team_l)], axis=0)
+            ctr += 1
+
+        if( is_first_iteration ):
+            is_first_iteration = False
+            df = pd.DataFrame([team_l])
+            ctr += 1
+
+        # count wins
+        if( team_l['status']=='Winner' ):
+            win_cnt += 1
+
+        # print("True Pass:"+str(analyzer.pass_r))
+        # print("Wrong Pass:"+str(analyzer.intercept_l))
+        # print("Right Team :"+analyzer.game.right_team.name + "\n")
+        # print("Game result :"+analyzer.status_r)
+        # print("Goals :"+str(analyzer.game.right_goal))
+        # print("Possession:"+str(analyzer.possession_r))
+        # print("Pass Accuracy:"+str(analyzer.pass_accuracy_r))
+        # print("on_target_shoot:"+str(analyzer.on_target_shoot_r))
+        # print('\n')
+
+        # print("True Pass:"+str(analyzer.pass_l))
+        # print("Wrong Pass:"+str(analyzer.intercept_r))
+        # print("Left Team :"+analyzer.game.left_team.name+"\n")
+        # print("Game result :"+analyzer.status_l)
+        # print("Goals :"+str(analyzer.game.left_goal))
+        # print("Possession:"+str(analyzer.possession_l))
+        print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
+        # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
+
+    our_goals_avg       = df['ally_goals'   ].mean()
+    opp_goals_avg       = df['opp_goals'    ].mean()
+    possession_avg      = df['possession'   ].mean()
+    correct_pass_avg    = df['correct_pass' ].mean()
+    wrong_pass_avg      = df['wrong_pass'   ].mean()
+    pass_accuracy_avg   = df['pass_accuracy'].mean()
+    our_goals_var       = df['ally_goals'   ].var()
+    opp_goals_var       = df['opp_goals'    ].var()
+    possession_var      = df['possession'   ].var()
+    correct_pass_var    = df['correct_pass' ].var()
+    wrong_pass_var      = df['wrong_pass'   ].var()
+    pass_accuracy_var   = df['pass_accuracy'].var()
     
-    print('file number:', ctr)
+    winrate = win_cnt/ctr
 
-    if(filename[-3:]=='.gz'):
-        # print(sys.argv[1]+'/'+filename[:-7])
-        gunzip(sys.argv[1]+'/'+filename)
-        parser = Parser(sys.argv[1]+'/'+filename[:-7])
-    else:    
-        # print(sys.argv[1]+'/'+filename[:-4])
-        parser = Parser(sys.argv[1]+'/'+filename[:-4])
-    game = Game(parser)
-    analyzer = Analyzer(game)
-    analyzer.analyze()
+    print('our_goals_avg     = ', our_goals_avg    )
+    print('opp_goals_avg     = ', opp_goals_avg    )
+    print('possession_avg    = ', possession_avg   )
+    print('correct_pass_avg  = ', correct_pass_avg )
+    print('wrong_pass_avg    = ', wrong_pass_avg   )
+    print('pass_accuracy_avg = ', pass_accuracy_avg)
+    print('our_goals_var     = ', our_goals_var    )
+    print('opp_goals_var     = ', opp_goals_var    )
+    print('possession_var    = ', possession_var   )
+    print('correct_pass_var  = ', correct_pass_var )
+    print('wrong_pass_var    = ', wrong_pass_var   )
+    print('pass_accuracy_var = ', pass_accuracy_var)
+    print('winrate           = ', winrate)
 
-    team_r = {
-        "name" : analyzer.game.right_team.name,
-        "status" : analyzer.status_r,
-        "ally_goals" : analyzer.game.right_goal,
-        "opp_goals" : analyzer.game.left_goal,
-        "possession" : analyzer.possession_r,
-        "pass_accuracy" : analyzer.pass_accuracy_r,
-        "correct_pass" : analyzer.pass_r,
-        "wrong_pass" : analyzer.intercept_l,
-        "on_target_shoot:" : analyzer.on_target_shoot_r
-    }
-
-    team_l = {
-        "name" : analyzer.game.left_team.name,
-        "status" : analyzer.status_l,
-        "ally_goals" : analyzer.game.left_goal,
-        "opp_goals" : analyzer.game.right_goal,
-        "possession" : analyzer.possession_l,
-        "pass_accuracy" : analyzer.pass_accuracy_l,
-        "correct_pass" : analyzer.pass_l,
-        "wrong_pass" : analyzer.intercept_r,
-        "on_target_shoot" : analyzer.on_target_shoot_l
-    }
-
-    if( is_first_iteration and len(sys.argv)<=2):
-        TEAM_NAME = team_l['name']
-
-    if( len(sys.argv)>2 and team_r['name']==sys.argv[2] ):
-        team_l,team_r = team_r,team_l
-
-    elif( team_r['name']==TEAM_NAME ):
-        team_l,team_r = team_r,team_l
-
-    if( not is_first_iteration ):
-        pd.concat([df, pd.Series(team_l)], axis=0)
-        ctr += 1
-
-    if( is_first_iteration ):
-        is_first_iteration = False
-        df = pd.DataFrame([team_l])
-        ctr += 1
-
-    # count wins
-    if( team_l['status']=='Winner' ):
-        win_cnt += 1
-
-    # print("True Pass:"+str(analyzer.pass_r))
-    # print("Wrong Pass:"+str(analyzer.intercept_l))
-    # print("Right Team :"+analyzer.game.right_team.name + "\n")
-    # print("Game result :"+analyzer.status_r)
-    # print("Goals :"+str(analyzer.game.right_goal))
-    # print("Possession:"+str(analyzer.possession_r))
-    # print("Pass Accuracy:"+str(analyzer.pass_accuracy_r))
-    # print("on_target_shoot:"+str(analyzer.on_target_shoot_r))
-    # print('\n')
-
-    # print("True Pass:"+str(analyzer.pass_l))
-    # print("Wrong Pass:"+str(analyzer.intercept_r))
-    # print("Left Team :"+analyzer.game.left_team.name+"\n")
-    # print("Game result :"+analyzer.status_l)
-    # print("Goals :"+str(analyzer.game.left_goal))
-    # print("Possession:"+str(analyzer.possession_l))
-    print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
-    # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
-
-our_goals_avg       = df['ally_goals'   ].mean()
-opp_goals_avg       = df['opp_goals'    ].mean()
-possession_avg      = df['possession'   ].mean()
-correct_pass_avg    = df['correct_pass' ].mean()
-wrong_pass_avg      = df['wrong_pass'   ].mean()
-pass_accuracy_avg   = df['pass_accuracy'].mean()
-our_goals_var       = df['ally_goals'   ].var()
-opp_goals_var       = df['opp_goals'    ].var()
-possession_var      = df['possession'   ].var()
-correct_pass_var    = df['correct_pass' ].var()
-wrong_pass_var      = df['wrong_pass'   ].var()
-pass_accuracy_var   = df['pass_accuracy'].var()
-
-"correct_pass" : analyzer.pass_l,
-        "wrong_pass" : analyzer.intercept_r,
-winrate = win_cnt/ctr
-
-print('our_goals_avg     = ', our_goals_avg    )
-print('opp_goals_avg     = ', opp_goals_avg    )
-print('possession_avg    = ', possession_avg   )
-print('correct_pass_avg  = ', correct_pass_avg )
-print('wrong_pass_avg    = ', wrong_pass_avg   )
-print('pass_accuracy_avg = ', pass_accuracy_avg)
-print('our_goals_var     = ', our_goals_var    )
-print('opp_goals_var     = ', opp_goals_var    )
-print('possession_var    = ', possession_var   )
-print('correct_pass_var  = ', correct_pass_var )
-print('wrong_pass_var    = ', wrong_pass_var   )
-print('pass_accuracy_var = ', pass_accuracy_var)
-print('winrate           = ', winrate)
-
-df.to_csv(sys.argv[1]+'\\summary.csv')
+    df.to_csv(myargs+'\\summary.csv')
 
     
     # print("Pass in Lenght:"+str(analyzer.pass_in_length_r))
