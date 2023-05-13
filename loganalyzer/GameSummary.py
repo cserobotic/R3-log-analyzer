@@ -11,25 +11,37 @@ for myargs in sys.argv[1:]:
     is_first_iteration=True
     TEAM_NAME=''
 
-    df = pd.DataFrame()
+    df = pd.DataFrame(columns=["name",
+                       "status",   
+                       "ally_goals",   
+                       "opp_goals",    
+                       "possession",   
+                       "pass_accuracy",    
+                       "correct_pass", 
+                       "wrong_pass",   
+                       "on_target_shoot:"])
     win_cnt=0
     ctr = 1
     # print(sys.argv)
     for filename in os.listdir(myargs):
-        
+
+        # if(filename[-3:]=='.gz'):
+        #     print('filename=',myargs+'/'+filename[:-7])
+        #     gunzip(myargs+'/*.gz')
+        #     parser = Parser(myargs+'/'+filename[:-7])
+        # else:    
+        if('.rcl' in filename):
+           continue
+
         print('file number:', ctr)
 
-        if(filename[-3:]=='.gz'):
-            # print(myargs+'/'+filename[:-7])
-            gunzip(myargs+'/'+filename)
-            parser = Parser(myargs+'/'+filename[:-7])
-        else:    
-            # print(myargs+'/'+filename[:-4])
-            parser = Parser(myargs+'/'+filename[:-4])
+        print('filename= ',myargs+'/'+filename[:-4])
+        parser = Parser(myargs+'/'+filename[:-4])
+
         game = Game(parser)
         analyzer = Analyzer(game)
         analyzer.analyze()
-
+        
         team_r = {
             "name" : analyzer.game.right_team.name,
             "status" : analyzer.status_r,
@@ -64,7 +76,8 @@ for myargs in sys.argv[1:]:
             team_l,team_r = team_r,team_l
 
         if( not is_first_iteration ):
-            pd.concat([df, pd.Series(team_l)], axis=0)
+            df = pd.concat([df, pd.DataFrame(team_l, index=[ctr])], axis=0)
+            # print(df)
             ctr += 1
 
         if( is_first_iteration ):
@@ -93,7 +106,17 @@ for myargs in sys.argv[1:]:
         # print("Goals :"+str(analyzer.game.left_goal))
         # print("Possession:"+str(analyzer.possession_l))
         print("Pass Accuracy:"+str(analyzer.pass_accuracy_l))
+        correct_pass_avg    = df['correct_pass' ].mean()
+        wrong_pass_avg      = df['wrong_pass'   ].mean()
+        pass_accuracy_avg   = df['pass_accuracy'].mean()
+        print('correct_pass_avg  = ', correct_pass_avg )
+        print('wrong_pass_avg    = ', wrong_pass_avg   )
+        print('pass_accuracy_avg = ', pass_accuracy_avg)
         # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
+
+    print(df)
+    print('#################################################')
+    print('directory finished and the report is as follows: ')
 
     our_goals_avg       = df['ally_goals'   ].mean()
     opp_goals_avg       = df['opp_goals'    ].mean()
