@@ -1,4 +1,4 @@
-# Namira Log-Analyzer
+# R3 Log-Analyzer
 
 Python Script for parsing and analyzing agent2D soccer simulation rcl and rcg log files. This has been used in [NAMIRA TPAS](https://github.com/Farzin-Negahbani/Namira_TPAS),
 a Tournament Planning and Analyzer Software.
@@ -21,8 +21,8 @@ You just need python 3.x! and setuptools running on any OS.
     sudo apt-get install python3 python3-pip python3-setuptools python3-numpy python3-matplotlib
 
 ### Installation
-    git clone https://github.com/Farzin-Negahbani/Namira_LogAnalyzer.git
-    cd Namira_LogAnalyzer
+    git clone https://github.com/cserobotic/R3-log-analyzer.git
+    cd R3-log-analyzer
 Then you can do one of the following methods:
 #### Method 1
     sudo python3 ./setup.py install
@@ -74,6 +74,24 @@ This analyzer can report following match facts and information:
 ### How to Use
 
 To check how to retrieve data, take a look at **Testcase.py** file.
+
+You can also gain a summary of your gamesb by running the **GameSummary.py** file.
+
+**ATTENTION** you will need to give a path which contains both `rcg` and `rcl` files.
+
+This file will automatically analyzes and gives brief summary about your games in an arbitrary path which you give as parameteres when running. also prints the whole game tables at the end and also saves a `.csv` file in the path that you gave.
+
+Run:
+``` bash
+python3 GameSummary.py <folder path1> <folder path2> <folder path3> ...
+```
+This runs analyzer summary for all `rcg` and `rcl` files in the `path` folders.
+
+Example Run (there are two folders as parameters):
+``` bash
+python GameSummary.py /home/arya/APH505/Robotics/robotics-lab/projects/Data-Analysis/data/vs-ThunderLeague/develop-ThunderLeague/log.d /home/arya/APH505/Robotics/robotics-lab/projects/Data-Analysis/data/vs-ThunderLeague/Arya-ThunderLeague/log.d
+```
+it will automatically ignore all non-rcl non-rcg files.
 
 #### As a Script
 
