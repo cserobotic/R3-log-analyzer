@@ -30,8 +30,8 @@ for myargs in sys.argv[1:]:
         #     gunzip(myargs+'/*.gz')
         #     parser = Parser(myargs+'/'+filename[:-7])
         # else:    
-        if('.rcl' in filename):
-           continue
+        if(not ('.rcg' in filename)):
+            continue
 
         print('file number:', ctr)
 
