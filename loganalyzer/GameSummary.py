@@ -147,7 +147,7 @@ for myargs in sys.argv[1:]:
     print('pass_accuracy_var = ', pass_accuracy_var)
     print('winrate           = ', winrate)
 
-    df.to_csv(myargs+'\\summary.csv')
+    df.to_csv(myargs+'/summary.csv')
 
     
     # print("Pass in Lenght:"+str(analyzer.pass_in_length_r))
