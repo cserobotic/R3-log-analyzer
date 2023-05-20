@@ -23,7 +23,6 @@ class Analyzer:
 
     def __init__(self, game):
 
-        self.game_path = game_path
         self.game = game
         self.play_on_cycles = game.get_play_on_cycles()
         self.pass_status = 0  # 0 --> no kick,  1 --> one kicker detected
@@ -85,7 +84,7 @@ class Analyzer:
         self.average_distance_10p_l = 0
         self.av_st_per_dist_10p_l = 0
 
-    def draw_heatmap(self, right_team=False, left_team=True, csv_path):
+    def draw_heatmap(self, right_team=False, left_team=True, csv_path='./'):
         import numpy as np
         import pandas as pd
         import matplotlib.pyplot as plt
@@ -128,7 +127,7 @@ class Analyzer:
                             except:
                                 continue
                             
-        trackpos_df.to_csv(csv_path+'_'+team.name+'.csv')
+        trackpos_df.to_csv(csv_path+'postrack_'+team.name+'.csv')
         # fig, ax = plt.subplots()
         # ax.set_xticks(np.arange(len([])))
         # ax.set_yticks(np.arange(len([])))
