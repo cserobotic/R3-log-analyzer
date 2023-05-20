@@ -21,7 +21,7 @@ class Region:
 
 class Analyzer:
 
-    def __init__(self, game, game_path):
+    def __init__(self, game):
 
         self.game_path = game_path
         self.game = game
