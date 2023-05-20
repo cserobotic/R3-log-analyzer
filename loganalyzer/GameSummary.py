@@ -2,7 +2,6 @@
 import os
 import sys
 import pandas as pd
-from sh import gunzip
 from loganalyzer.Parser import *
 from loganalyzer.Game import *
 from loganalyzer.Analyzer import *
