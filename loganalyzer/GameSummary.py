@@ -2,7 +2,6 @@
 import os
 import sys
 import pandas as pd
-from sh import gunzip
 from loganalyzer.Parser import *
 from loganalyzer.Game import *
 from loganalyzer.Analyzer import *
@@ -124,12 +123,12 @@ for myargs in sys.argv[1:]:
     correct_pass_avg    = df['correct_pass' ].mean()
     wrong_pass_avg      = df['wrong_pass'   ].mean()
     pass_accuracy_avg   = df['pass_accuracy'].mean()
-    our_goals_var       = df['ally_goals'   ].var()
-    opp_goals_var       = df['opp_goals'    ].var()
-    possession_var      = df['possession'   ].var()
-    correct_pass_var    = df['correct_pass' ].var()
-    wrong_pass_var      = df['wrong_pass'   ].var()
-    pass_accuracy_var   = df['pass_accuracy'].var()
+    our_goals_std       = df['ally_goals'   ].std()
+    opp_goals_std       = df['opp_goals'    ].std()
+    possession_std      = df['possession'   ].std()
+    correct_pass_std    = df['correct_pass' ].std()
+    wrong_pass_std      = df['wrong_pass'   ].std()
+    pass_accuracy_std   = df['pass_accuracy'].std()
     
     winrate = win_cnt/ctr
 
@@ -139,12 +138,12 @@ for myargs in sys.argv[1:]:
     print('correct_pass_avg  = ', correct_pass_avg )
     print('wrong_pass_avg    = ', wrong_pass_avg   )
     print('pass_accuracy_avg = ', pass_accuracy_avg)
-    print('our_goals_var     = ', our_goals_var    )
-    print('opp_goals_var     = ', opp_goals_var    )
-    print('possession_var    = ', possession_var   )
-    print('correct_pass_var  = ', correct_pass_var )
-    print('wrong_pass_var    = ', wrong_pass_var   )
-    print('pass_accuracy_var = ', pass_accuracy_var)
+    print('our_goals_std     = ', our_goals_std    )
+    print('opp_goals_std     = ', opp_goals_std    )
+    print('possession_std    = ', possession_std   )
+    print('correct_pass_std  = ', correct_pass_std )
+    print('wrong_pass_std    = ', wrong_pass_std   )
+    print('pass_accuracy_std = ', pass_accuracy_std)
     print('winrate           = ', winrate)
 
     df.to_csv(myargs+'/summary.csv')
