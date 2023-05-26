@@ -109,6 +109,7 @@ class Analyzer:
             team =self.game.right_team
         # for cycle in self.play_on_cycles:
         for cycle in self.play_on_cycles:
+            print(cycle,' out of ' ,self.play_on_cycles[-1], ' cycles', end='\r')
             for agent in team.agents:
                 if(agent.number != 1):
                     x = int(round(agent.data[cycle]['x'], 1))+52
