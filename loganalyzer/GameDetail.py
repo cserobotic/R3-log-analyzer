@@ -213,7 +213,7 @@ for myargs in sys.argv[1:]:
         winrate = win_cnt/ctr
         
         print('################### AVERAGES')
-        print('our_goals_avg            = ' , our_goals_avg           )
+        print('our_goals_avg            = ' , our_goals_avg            )
         print('opp_goals_avg            = ' , opp_goals_avg            )
         print('possession_avg           = ' , possession_avg           )
         print('correct_pass_avg         = ' , correct_pass_avg         )
@@ -234,7 +234,7 @@ for myargs in sys.argv[1:]:
         print('used_per_distance_avg    ='  , used_per_distance_avg    )
 
         print('################### stdIANCES')
-        print('our_goals_std            = ' , ally_goals_std           )
+        print('our_goals_std            = ' , our_goals_std            )
         print('opp_goals_std            = ' , opp_goals_std            )
         print('possession_std           = ' , possession_std           )
         print('correct_pass_std         = ' , correct_pass_std         )
