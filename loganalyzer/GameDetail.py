@@ -255,6 +255,7 @@ for myargs in sys.argv[1:]:
         print('used_per_distance_std    = ' , used_per_distance_std    )
 
         print('winrate           = ', winrate)
+        # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
     print(df)
     print('#################################################')
