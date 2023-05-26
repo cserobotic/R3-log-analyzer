@@ -2,7 +2,6 @@
 import os
 import sys
 import pandas as pd
-from sh import gunzip
 from loganalyzer.Parser import *
 from loganalyzer.Game import *
 from loganalyzer.Analyzer import *
@@ -27,12 +26,42 @@ for myargs in sys.argv[1:]:
                         "shoot_in_length",
                         "shoot_in_width",
                         "shoot_accuracy",
-                        "used_stamina_agents",
-                        "team_moved_distance",
+                        "used_stamina_1",
+                        "used_stamina_2",
+                        "used_stamina_3",
+                        "used_stamina_4",
+                        "used_stamina_5",
+                        "used_stamina_6",
+                        "used_stamina_7",
+                        "used_stamina_8",
+                        "used_stamina_9",
+                        "used_stamina_10",
+                        "used_stamina_11",
+                        "moved_distance_1",
+                        "moved_distance_2",
+                        "moved_distance_3",
+                        "moved_distance_4",
+                        "moved_distance_5",
+                        "moved_distance_6",
+                        "moved_distance_7",
+                        "moved_distance_8",
+                        "moved_distance_9",
+                        "moved_distance_10",
+                        "moved_distance_11",
                         "average_distance_10p",
                         "average_stamina_10p",
                         "av_st_per_dist_10p",
-                        "used_per_distance"])
+                        "used_per_distance_1",
+                        "used_per_distance_2",
+                        "used_per_distance_3",
+                        "used_per_distance_4",
+                        "used_per_distance_5",
+                        "used_per_distance_6",
+                        "used_per_distance_7",
+                        "used_per_distance_8",
+                        "used_per_distance_9",
+                        "used_per_distance_10",
+                        "used_per_distance_11"])
                           
     win_cnt=0
     ctr = 1
@@ -59,7 +88,7 @@ for myargs in sys.argv[1:]:
         team_r = {
             "name"                  : analyzer.game.right_team.name,
             "status"                : analyzer.status_r,
-            "our_goals"            : analyzer.game.right_goal,
+            "our_goals"             : analyzer.game.right_goal,
             "opp_goals"             : analyzer.game.left_goal,
             "possession"            : analyzer.possession_r,
             "pass_accuracy"         : analyzer.pass_accuracy_r,
@@ -72,18 +101,48 @@ for myargs in sys.argv[1:]:
             "shoot_in_length"       : analyzer.shoot_in_length_r,
             "shoot_in_width"        : analyzer.shoot_in_width_r,
             "shoot_accuracy"        : analyzer.shoot_accuracy_r,
-            "used_stamina_agents"   : analyzer.used_stamina_agents_r,
-            "team_moved_distance"   : analyzer.team_moved_distance_r,
+            "used_stamina_1"        : analyzer.used_stamina_agents_r[0][0],
+            "used_stamina_2"        : analyzer.used_stamina_agents_r[1][0],
+            "used_stamina_3"        : analyzer.used_stamina_agents_r[2][0],
+            "used_stamina_4"        : analyzer.used_stamina_agents_r[3][0],
+            "used_stamina_5"        : analyzer.used_stamina_agents_r[4][0],
+            "used_stamina_6"        : analyzer.used_stamina_agents_r[5][0],
+            "used_stamina_7"        : analyzer.used_stamina_agents_r[6][0],
+            "used_stamina_8"        : analyzer.used_stamina_agents_r[7][0],
+            "used_stamina_9"        : analyzer.used_stamina_agents_r[8][0],
+            "used_stamina_10"       : analyzer.used_stamina_agents_r[9][0],
+            "used_stamina_11"       : analyzer.used_stamina_agents_r[10][0],
+            "moved_distance_1"      : analyzer.team_moved_distance_r[0][0],
+            "moved_distance_2"      : analyzer.team_moved_distance_r[1][0],
+            "moved_distance_3"      : analyzer.team_moved_distance_r[2][0],
+            "moved_distance_4"      : analyzer.team_moved_distance_r[3][0],
+            "moved_distance_5"      : analyzer.team_moved_distance_r[4][0],
+            "moved_distance_6"      : analyzer.team_moved_distance_r[5][0],
+            "moved_distance_7"      : analyzer.team_moved_distance_r[6][0],
+            "moved_distance_8"      : analyzer.team_moved_distance_r[7][0],
+            "moved_distance_9"      : analyzer.team_moved_distance_r[8][0],
+            "moved_distance_10"     : analyzer.team_moved_distance_r[9][0],
+            "moved_distance_11"     : analyzer.team_moved_distance_r[10][0],
             "average_distance_10p"  : analyzer.average_distance_10p_r,
             "average_stamina_10p"   : analyzer.average_stamina_10p_r,
             "av_st_per_dist_10p"    : analyzer.av_st_per_dist_10p_r,
-            "used_per_distance"     : analyzer.used_per_distance_r,
+            "used_per_distance_1"   : analyzer.used_per_distance_r[0][0],
+            "used_per_distance_2"   : analyzer.used_per_distance_r[1][0],
+            "used_per_distance_3"   : analyzer.used_per_distance_r[2][0],
+            "used_per_distance_4"   : analyzer.used_per_distance_r[3][0],
+            "used_per_distance_5"   : analyzer.used_per_distance_r[4][0],
+            "used_per_distance_6"   : analyzer.used_per_distance_r[5][0],
+            "used_per_distance_7"   : analyzer.used_per_distance_r[6][0],
+            "used_per_distance_8"   : analyzer.used_per_distance_r[7][0],
+            "used_per_distance_9"   : analyzer.used_per_distance_r[8][0],
+            "used_per_distance_10"  : analyzer.used_per_distance_r[9][0],
+            "used_per_distance_11"  : analyzer.used_per_distance_r[10][0]
         }
 
         team_l = {
             "name"                  : analyzer.game.left_team.name,
             "status"                : analyzer.status_l,
-            "our_goals"            : analyzer.game.left_goal,
+            "our_goals"             : analyzer.game.left_goal,
             "opp_goals"             : analyzer.game.right_goal,
             "possession"            : analyzer.possession_l,
             "pass_accuracy"         : analyzer.pass_accuracy_l,
@@ -96,12 +155,42 @@ for myargs in sys.argv[1:]:
             "shoot_in_length"       : analyzer.shoot_in_length_l,
             "shoot_in_width"        : analyzer.shoot_in_width_l,
             "shoot_accuracy"        : analyzer.shoot_accuracy_l,
-            "used_stamina_agents"   : analyzer.used_stamina_agents_l,
-            "team_moved_distance"   : analyzer.team_moved_distance_l,
+            "used_stamina_1"        : analyzer.used_stamina_agents_l[0][0],
+            "used_stamina_2"        : analyzer.used_stamina_agents_l[1][0],
+            "used_stamina_3"        : analyzer.used_stamina_agents_l[2][0],
+            "used_stamina_4"        : analyzer.used_stamina_agents_l[3][0],
+            "used_stamina_5"        : analyzer.used_stamina_agents_l[4][0],
+            "used_stamina_6"        : analyzer.used_stamina_agents_l[5][0],
+            "used_stamina_7"        : analyzer.used_stamina_agents_l[6][0],
+            "used_stamina_8"        : analyzer.used_stamina_agents_l[7][0],
+            "used_stamina_9"        : analyzer.used_stamina_agents_l[8][0],
+            "used_stamina_10"       : analyzer.used_stamina_agents_l[9][0],
+            "used_stamina_11"       : analyzer.used_stamina_agents_l[10][0],
+            "moved_distance_1"      : analyzer.team_moved_distance_l[0][0],
+            "moved_distance_2"      : analyzer.team_moved_distance_l[1][0],
+            "moved_distance_3"      : analyzer.team_moved_distance_l[2][0],
+            "moved_distance_4"      : analyzer.team_moved_distance_l[3][0],
+            "moved_distance_5"      : analyzer.team_moved_distance_l[4][0],
+            "moved_distance_6"      : analyzer.team_moved_distance_l[5][0],
+            "moved_distance_7"      : analyzer.team_moved_distance_l[6][0],
+            "moved_distance_8"      : analyzer.team_moved_distance_l[7][0],
+            "moved_distance_9"      : analyzer.team_moved_distance_l[8][0],
+            "moved_distance_10"     : analyzer.team_moved_distance_l[9][0],
+            "moved_distance_11"     : analyzer.team_moved_distance_l[10][0],
             "average_distance_10p"  : analyzer.average_distance_10p_l,
             "average_stamina_10p"   : analyzer.average_stamina_10p_l,
             "av_st_per_dist_10p"    : analyzer.av_st_per_dist_10p_l,
-            "used_per_distance"     : analyzer.used_per_distance_l,
+            "used_per_distance_1"   : analyzer.used_per_distance_r[0][0],
+            "used_per_distance_2"   : analyzer.used_per_distance_r[1][0],
+            "used_per_distance_3"   : analyzer.used_per_distance_r[2][0],
+            "used_per_distance_4"   : analyzer.used_per_distance_r[3][0],
+            "used_per_distance_5"   : analyzer.used_per_distance_r[4][0],
+            "used_per_distance_6"   : analyzer.used_per_distance_r[5][0],
+            "used_per_distance_7"   : analyzer.used_per_distance_r[6][0],
+            "used_per_distance_8"   : analyzer.used_per_distance_r[7][0],
+            "used_per_distance_9"   : analyzer.used_per_distance_r[8][0],
+            "used_per_distance_10"  : analyzer.used_per_distance_r[9][0],
+            "used_per_distance_11"  : analyzer.used_per_distance_r[10][0]
         }
 
         if( is_first_iteration and len(sys.argv)<=2):
@@ -169,181 +258,191 @@ for myargs in sys.argv[1:]:
         print("Stamina per Distance: "                      +str(analyzer.used_per_distance_l))
         print('\n')
 
+        for column in df.columns:
+            if((column=='name') or (column=='status')):
+                continue
+            print(column,' AVG =\t\t',df[column].mean())
+            print(column,' STD =\t\t',df[column].std())
 
-        our_goals_avg            = df['our_goals'            ].mean()
-        opp_goals_avg            = df['opp_goals'            ].mean()
-        possession_avg           = df['possession'           ].mean()
-        correct_pass_avg         = df['correct_pass'         ].mean()
-        wrong_pass_avg           = df['wrong_pass'           ].mean()
-        pass_accuracy_avg        = df['pass_accuracy'        ].mean()
-        pass_in_length_avg       = df['pass_in_length'       ].mean()
-        pass_in_width_avg        = df['pass_in_width'        ].mean()
-        on_target_shoot_avg      = df['on_target_shoot'      ].mean()
-        off_target_shoot_avg     = df['off_target_shoot'     ].mean()
-        shoot_in_length_avg      = df['shoot_in_length'      ].mean()
-        shoot_in_width_avg       = df['shoot_in_width'       ].mean()
-        shoot_accuracy_avg       = df['shoot_accuracy'       ].mean()
-        used_stamina_agents_avg  = df['used_stamina_agents'  ].mean()
-        team_moved_distance_avg  = df['team_moved_distance'  ].mean()
-        average_distance_10p_avg = df['average_distance_10p' ].mean()
-        average_stamina_10p_avg  = df['average_stamina_10p'  ].mean()
-        av_st_per_dist_10p_avg   = df['av_st_per_dist_10p'   ].mean()
-        used_per_distance_avg    = df['used_per_distance'    ].mean()
+
+        # our_goals_avg            = df['our_goals'            ].mean()
+        # opp_goals_avg            = df['opp_goals'            ].mean()
+        # possession_avg           = df['possession'           ].mean()
+        # correct_pass_avg         = df['correct_pass'         ].mean()
+        # wrong_pass_avg           = df['wrong_pass'           ].mean()
+        # pass_accuracy_avg        = df['pass_accuracy'        ].mean()
+        # pass_in_length_avg       = df['pass_in_length'       ].mean()
+        # pass_in_width_avg        = df['pass_in_width'        ].mean()
+        # on_target_shoot_avg      = df['on_target_shoot'      ].mean()
+        # off_target_shoot_avg     = df['off_target_shoot'     ].mean()
+        # shoot_in_length_avg      = df['shoot_in_length'      ].mean()
+        # shoot_in_width_avg       = df['shoot_in_width'       ].mean()
+        # shoot_accuracy_avg       = df['shoot_accuracy'       ].mean()
+        # used_stamina_agents_avg  = df['used_stamina_agents'  ].mean()
+        # team_moved_distance_avg  = df['team_moved_distance'  ].mean()
+        # average_distance_10p_avg = df['average_distance_10p' ].mean()
+        # average_stamina_10p_avg  = df['average_stamina_10p'  ].mean()
+        # av_st_per_dist_10p_avg   = df['av_st_per_dist_10p'   ].mean()
+        # used_per_distance_avg    = df['used_per_distance'    ].mean()
         
-        our_goals_std            = df['our_goals'            ].std()
-        opp_goals_std            = df['opp_goals'            ].std()
-        possession_std           = df['possession'           ].std()
-        correct_pass_std         = df['correct_pass'         ].std()
-        wrong_pass_std           = df['wrong_pass'           ].std()
-        pass_accuracy_std        = df['pass_accuracy'        ].std()
-        pass_in_length_std       = df['pass_in_length'       ].std()
-        pass_in_width_std        = df['pass_in_width'        ].std()
-        on_target_shoot_std      = df['on_target_shoot'      ].std()
-        off_target_shoot_std     = df['off_target_shoot'     ].std()
-        shoot_in_length_std      = df['shoot_in_length'      ].std()
-        shoot_in_width_std       = df['shoot_in_width'       ].std()
-        shoot_accuracy_std       = df['shoot_accuracy'       ].std()
-        used_stamina_agents_std  = df['used_stamina_agents'  ].std()
-        team_moved_distance_std  = df['team_moved_distance'  ].std()
-        average_distance_10p_std = df['average_distance_10p' ].std()
-        average_stamina_10p_std  = df['average_stamina_10p'  ].std()
-        av_st_per_dist_10p_std   = df['av_st_per_dist_10p'   ].std()
-        used_per_distance_std    = df['used_per_distance'    ].std()
+        # our_goals_std            = df['our_goals'            ].std()
+        # opp_goals_std            = df['opp_goals'            ].std()
+        # possession_std           = df['possession'           ].std()
+        # correct_pass_std         = df['correct_pass'         ].std()
+        # wrong_pass_std           = df['wrong_pass'           ].std()
+        # pass_accuracy_std        = df['pass_accuracy'        ].std()
+        # pass_in_length_std       = df['pass_in_length'       ].std()
+        # pass_in_width_std        = df['pass_in_width'        ].std()
+        # on_target_shoot_std      = df['on_target_shoot'      ].std()
+        # off_target_shoot_std     = df['off_target_shoot'     ].std()
+        # shoot_in_length_std      = df['shoot_in_length'      ].std()
+        # shoot_in_width_std       = df['shoot_in_width'       ].std()
+        # shoot_accuracy_std       = df['shoot_accuracy'       ].std()
+        # used_stamina_agents_std  = df['used_stamina_agents'  ].std()
+        # team_moved_distance_std  = df['team_moved_distance'  ].std()
+        # average_distance_10p_std = df['average_distance_10p' ].std()
+        # average_stamina_10p_std  = df['average_stamina_10p'  ].std()
+        # av_st_per_dist_10p_std   = df['av_st_per_dist_10p'   ].std()
+        # used_per_distance_std    = df['used_per_distance'    ].std()
 
         winrate = win_cnt/ctr
         
-        print('################### AVERAGES')
-        print('our_goals_avg            = ' , our_goals_avg            )
-        print('opp_goals_avg            = ' , opp_goals_avg            )
-        print('possession_avg           = ' , possession_avg           )
-        print('correct_pass_avg         = ' , correct_pass_avg         )
-        print('wrong_pass_avg           = ' , wrong_pass_avg           )
-        print('pass_accuracy_avg        = ' , pass_accuracy_avg        )
-        print('pass_in_length_avg       ='  , pass_in_length_avg       )
-        print('pass_in_width_avg        ='  , pass_in_width_avg        )
-        print('on_target_shoot_avg      ='  , on_target_shoot_avg      )
-        print('off_target_shoot_avg     ='  , off_target_shoot_avg     )
-        print('shoot_in_length_avg      ='  , shoot_in_length_avg      )
-        print('shoot_in_width_avg       ='  , shoot_in_width_avg       )
-        print('shoot_accuracy_avg       ='  , shoot_accuracy_avg       )
-        print('used_stamina_agents_avg  ='  , used_stamina_agents_avg  )
-        print('team_moved_distance_avg  ='  , team_moved_distance_avg  )
-        print('average_distance_10p_avg ='  , average_distance_10p_avg )
-        print('average_stamina_10p_avg  ='  , average_stamina_10p_avg  )
-        print('av_st_per_dist_10p_avg   ='  , av_st_per_dist_10p_avg   )
-        print('used_per_distance_avg    ='  , used_per_distance_avg    )
+        # print('################### AVERAGES')
+        # print('our_goals_avg            = ' , our_goals_avg            )
+        # print('opp_goals_avg            = ' , opp_goals_avg            )
+        # print('possession_avg           = ' , possession_avg           )
+        # print('correct_pass_avg         = ' , correct_pass_avg         )
+        # print('wrong_pass_avg           = ' , wrong_pass_avg           )
+        # print('pass_accuracy_avg        = ' , pass_accuracy_avg        )
+        # print('pass_in_length_avg       ='  , pass_in_length_avg       )
+        # print('pass_in_width_avg        ='  , pass_in_width_avg        )
+        # print('on_target_shoot_avg      ='  , on_target_shoot_avg      )
+        # print('off_target_shoot_avg     ='  , off_target_shoot_avg     )
+        # print('shoot_in_length_avg      ='  , shoot_in_length_avg      )
+        # print('shoot_in_width_avg       ='  , shoot_in_width_avg       )
+        # print('shoot_accuracy_avg       ='  , shoot_accuracy_avg       )
+        # print('used_stamina_agents_avg  ='  , used_stamina_agents_avg  )
+        # print('team_moved_distance_avg  ='  , team_moved_distance_avg  )
+        # print('average_distance_10p_avg ='  , average_distance_10p_avg )
+        # print('average_stamina_10p_avg  ='  , average_stamina_10p_avg  )
+        # print('av_st_per_dist_10p_avg   ='  , av_st_per_dist_10p_avg   )
+        # print('used_per_distance_avg    ='  , used_per_distance_avg    )
 
-        print('################### stdIANCES')
-        print('our_goals_std            = ' , our_goals_std            )
-        print('opp_goals_std            = ' , opp_goals_std            )
-        print('possession_std           = ' , possession_std           )
-        print('correct_pass_std         = ' , correct_pass_std         )
-        print('wrong_pass_std           = ' , wrong_pass_std           )
-        print('pass_accuracy_std        = ' , pass_accuracy_std        )
-        print('pass_in_length_std       = ' , pass_in_length_std       )
-        print('pass_in_width_std        = ' , pass_in_width_std        )
-        print('on_target_shoot_std      = ' , on_target_shoot_std      )
-        print('off_target_shoot_std     = ' , off_target_shoot_std     )
-        print('shoot_in_length_std      = ' , shoot_in_length_std      )
-        print('shoot_in_width_std       = ' , shoot_in_width_std       )
-        print('shoot_accuracy_std       = ' , shoot_accuracy_std       )
-        print('used_stamina_agents_std  = ' , used_stamina_agents_std  )
-        print('team_moved_distance_std  = ' , team_moved_distance_std  )
-        print('average_distance_10p_std = ' , average_distance_10p_std )
-        print('average_stamina_10p_std  = ' , average_stamina_10p_std  )
-        print('av_st_per_dist_10p_std   = ' , av_st_per_dist_10p_std   )
-        print('used_per_distance_std    = ' , used_per_distance_std    )
-        clear_outputs = '\033[F'*86
-        print('winrate           = ', winrate, end=clear_outputs)
+        # print('################### STANDARD DEVIATIONS')
+        # print('our_goals_std            = ' , our_goals_std            )
+        # print('opp_goals_std            = ' , opp_goals_std            )
+        # print('possession_std           = ' , possession_std           )
+        # print('correct_pass_std         = ' , correct_pass_std         )
+        # print('wrong_pass_std           = ' , wrong_pass_std           )
+        # print('pass_accuracy_std        = ' , pass_accuracy_std        )
+        # print('pass_in_length_std       = ' , pass_in_length_std       )
+        # print('pass_in_width_std        = ' , pass_in_width_std        )
+        # print('on_target_shoot_std      = ' , on_target_shoot_std      )
+        # print('off_target_shoot_std     = ' , off_target_shoot_std     )
+        # print('shoot_in_length_std      = ' , shoot_in_length_std      )
+        # print('shoot_in_width_std       = ' , shoot_in_width_std       )
+        # print('shoot_accuracy_std       = ' , shoot_accuracy_std       )
+        # print('used_stamina_agents_std  = ' , used_stamina_agents_std  )
+        # print('team_moved_distance_std  = ' , team_moved_distance_std  )
+        # print('average_distance_10p_std = ' , average_distance_10p_std )
+        # print('average_stamina_10p_std  = ' , average_stamina_10p_std  )
+        # print('av_st_per_dist_10p_std   = ' , av_st_per_dist_10p_std   )
+        # print('used_per_distance_std    = ' , used_per_distance_std    )
+        # clear_outputs = 138*'\033[F'
+        print('winrate           = ', winrate)
         # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
     print(df)
     print('#################################################')
     print('directory finished and the report is as follows: ')
 
-    our_goals_avg            = df['our_goals'            ].mean()
-    opp_goals_avg            = df['opp_goals'            ].mean()
-    possession_avg           = df['possession'           ].mean()
-    correct_pass_avg         = df['correct_pass'         ].mean()
-    wrong_pass_avg           = df['wrong_pass'           ].mean()
-    pass_accuracy_avg        = df['pass_accuracy'        ].mean()
-    pass_in_length_avg       = df['pass_in_length'       ].mean()
-    pass_in_width_avg        = df['pass_in_width'        ].mean()
-    on_target_shoot_avg      = df['on_target_shoot'      ].mean()
-    off_target_shoot_avg     = df['off_target_shoot'     ].mean()
-    shoot_in_length_avg      = df['shoot_in_length'      ].mean()
-    shoot_in_width_avg       = df['shoot_in_width'       ].mean()
-    shoot_accuracy_avg       = df['shoot_accuracy'       ].mean()
-    used_stamina_agents_avg  = df['used_stamina_agents'  ].mean()
-    team_moved_distance_avg  = df['team_moved_distance'  ].mean()
-    average_distance_10p_avg = df['average_distance_10p' ].mean()
-    average_stamina_10p_avg  = df['average_stamina_10p'  ].mean()
-    av_st_per_dist_10p_avg   = df['av_st_per_dist_10p'   ].mean()
-    used_per_distance_avg    = df['used_per_distance'    ].mean()
+    # our_goals_avg            = df['our_goals'            ].mean()
+    # opp_goals_avg            = df['opp_goals'            ].mean()
+    # possession_avg           = df['possession'           ].mean()
+    # correct_pass_avg         = df['correct_pass'         ].mean()
+    # wrong_pass_avg           = df['wrong_pass'           ].mean()
+    # pass_accuracy_avg        = df['pass_accuracy'        ].mean()
+    # pass_in_length_avg       = df['pass_in_length'       ].mean()
+    # pass_in_width_avg        = df['pass_in_width'        ].mean()
+    # on_target_shoot_avg      = df['on_target_shoot'      ].mean()
+    # off_target_shoot_avg     = df['off_target_shoot'     ].mean()
+    # shoot_in_length_avg      = df['shoot_in_length'      ].mean()
+    # shoot_in_width_avg       = df['shoot_in_width'       ].mean()
+    # shoot_accuracy_avg       = df['shoot_accuracy'       ].mean()
+    # used_stamina_agents_avg  = df['used_stamina_agents'  ].mean()
+    # team_moved_distance_avg  = df['team_moved_distance'  ].mean()
+    # average_distance_10p_avg = df['average_distance_10p' ].mean()
+    # average_stamina_10p_avg  = df['average_stamina_10p'  ].mean()
+    # av_st_per_dist_10p_avg   = df['av_st_per_dist_10p'   ].mean()
+    # used_per_distance_avg    = df['used_per_distance'    ].mean()
     
-    our_goals_std            = df['our_goals'            ].std()
-    opp_goals_std            = df['opp_goals'            ].std()
-    possession_std           = df['possession'           ].std()
-    correct_pass_std         = df['correct_pass'         ].std()
-    wrong_pass_std           = df['wrong_pass'           ].std()
-    pass_accuracy_std        = df['pass_accuracy'        ].std()
-    pass_in_length_std       = df['pass_in_length'       ].std()
-    pass_in_width_std        = df['pass_in_width'        ].std()
-    on_target_shoot_std      = df['on_target_shoot'      ].std()
-    off_target_shoot_std     = df['off_target_shoot'     ].std()
-    shoot_in_length_std      = df['shoot_in_length'      ].std()
-    shoot_in_width_std       = df['shoot_in_width'       ].std()
-    shoot_accuracy_std       = df['shoot_accuracy'       ].std()
-    used_stamina_agents_std  = df['used_stamina_agents'  ].std()
-    team_moved_distance_std  = df['team_moved_distance'  ].std()
-    average_distance_10p_std = df['average_distance_10p' ].std()
-    average_stamina_10p_std  = df['average_stamina_10p'  ].std()
-    av_st_per_dist_10p_std   = df['av_st_per_dist_10p'   ].std()
-    used_per_distance_std    = df['used_per_distance'    ].std()
+    # our_goals_std            = df['our_goals'            ].std()
+    # opp_goals_std            = df['opp_goals'            ].std()
+    # possession_std           = df['possession'           ].std()
+    # correct_pass_std         = df['correct_pass'         ].std()
+    # wrong_pass_std           = df['wrong_pass'           ].std()
+    # pass_accuracy_std        = df['pass_accuracy'        ].std()
+    # pass_in_length_std       = df['pass_in_length'       ].std()
+    # pass_in_width_std        = df['pass_in_width'        ].std()
+    # on_target_shoot_std      = df['on_target_shoot'      ].std()
+    # off_target_shoot_std     = df['off_target_shoot'     ].std()
+    # shoot_in_length_std      = df['shoot_in_length'      ].std()
+    # shoot_in_width_std       = df['shoot_in_width'       ].std()
+    # shoot_accuracy_std       = df['shoot_accuracy'       ].std()
+    # used_stamina_agents_std  = df['used_stamina_agents'  ].std()
+    # team_moved_distance_std  = df['team_moved_distance'  ].std()
+    # average_distance_10p_std = df['average_distance_10p' ].std()
+    # average_stamina_10p_std  = df['average_stamina_10p'  ].std()
+    # av_st_per_dist_10p_std   = df['av_st_per_dist_10p'   ].std()
+    # used_per_distance_std    = df['used_per_distance'    ].std()
 
+    for column in df.columns:
+            print(column,'AVG =\t\t\t',df[column].mean())
+            print(column,'STD =\t\t\t',df[column].std())
+            
     winrate = win_cnt/ctr
     
-    print('################### AVERAGES')
-    print('our_goals_avg            = ' , our_goals_avg            )
-    print('opp_goals_avg            = ' , opp_goals_avg            )
-    print('possession_avg           = ' , possession_avg           )
-    print('correct_pass_avg         = ' , correct_pass_avg         )
-    print('wrong_pass_avg           = ' , wrong_pass_avg           )
-    print('pass_accuracy_avg        = ' , pass_accuracy_avg        )
-    print('pass_in_length_avg       ='  , pass_in_length_avg       )
-    print('pass_in_width_avg        ='  , pass_in_width_avg        )
-    print('on_target_shoot_avg      ='  , on_target_shoot_avg      )
-    print('off_target_shoot_avg     ='  , off_target_shoot_avg     )
-    print('shoot_in_length_avg      ='  , shoot_in_length_avg      )
-    print('shoot_in_width_avg       ='  , shoot_in_width_avg       )
-    print('shoot_accuracy_avg       ='  , shoot_accuracy_avg       )
-    print('used_stamina_agents_avg  ='  , used_stamina_agents_avg  )
-    print('team_moved_distance_avg  ='  , team_moved_distance_avg  )
-    print('average_distance_10p_avg ='  , average_distance_10p_avg )
-    print('average_stamina_10p_avg  ='  , average_stamina_10p_avg  )
-    print('av_st_per_dist_10p_avg   ='  , av_st_per_dist_10p_avg   )
-    print('used_per_distance_avg    ='  , used_per_distance_avg    )
+    # print('################### AVERAGES')
+    # print('our_goals_avg            = ' , our_goals_avg            )
+    # print('opp_goals_avg            = ' , opp_goals_avg            )
+    # print('possession_avg           = ' , possession_avg           )
+    # print('correct_pass_avg         = ' , correct_pass_avg         )
+    # print('wrong_pass_avg           = ' , wrong_pass_avg           )
+    # print('pass_accuracy_avg        = ' , pass_accuracy_avg        )
+    # print('pass_in_length_avg       ='  , pass_in_length_avg       )
+    # print('pass_in_width_avg        ='  , pass_in_width_avg        )
+    # print('on_target_shoot_avg      ='  , on_target_shoot_avg      )
+    # print('off_target_shoot_avg     ='  , off_target_shoot_avg     )
+    # print('shoot_in_length_avg      ='  , shoot_in_length_avg      )
+    # print('shoot_in_width_avg       ='  , shoot_in_width_avg       )
+    # print('shoot_accuracy_avg       ='  , shoot_accuracy_avg       )
+    # print('used_stamina_agents_avg  ='  , used_stamina_agents_avg  )
+    # print('team_moved_distance_avg  ='  , team_moved_distance_avg  )
+    # print('average_distance_10p_avg ='  , average_distance_10p_avg )
+    # print('average_stamina_10p_avg  ='  , average_stamina_10p_avg  )
+    # print('av_st_per_dist_10p_avg   ='  , av_st_per_dist_10p_avg   )
+    # print('used_per_distance_avg    ='  , used_per_distance_avg    )
 
-    print('################### STANDARD DEVIATIONS')
-    print('our_goals_std            = ' , our_goals_std            )
-    print('opp_goals_std            = ' , opp_goals_std            )
-    print('possession_std           = ' , possession_std           )
-    print('correct_pass_std         = ' , correct_pass_std         )
-    print('wrong_pass_std           = ' , wrong_pass_std           )
-    print('pass_accuracy_std        = ' , pass_accuracy_std        )
-    print('pass_in_length_std       = ' , pass_in_length_std       )
-    print('pass_in_width_std        = ' , pass_in_width_std        )
-    print('on_target_shoot_std      = ' , on_target_shoot_std      )
-    print('off_target_shoot_std     = ' , off_target_shoot_std     )
-    print('shoot_in_length_std      = ' , shoot_in_length_std      )
-    print('shoot_in_width_std       = ' , shoot_in_width_std       )
-    print('shoot_accuracy_std       = ' , shoot_accuracy_std       )
-    print('used_stamina_agents_std  = ' , used_stamina_agents_std  )
-    print('team_moved_distance_std  = ' , team_moved_distance_std  )
-    print('average_distance_10p_std = ' , average_distance_10p_std )
-    print('average_stamina_10p_std  = ' , average_stamina_10p_std  )
-    print('av_st_per_dist_10p_std   = ' , av_st_per_dist_10p_std   )
-    print('used_per_distance_std    = ' , used_per_distance_std    )
+    # print('################### STANDARD DEVIATIONS')
+    # print('our_goals_std            = ' , our_goals_std            )
+    # print('opp_goals_std            = ' , opp_goals_std            )
+    # print('possession_std           = ' , possession_std           )
+    # print('correct_pass_std         = ' , correct_pass_std         )
+    # print('wrong_pass_std           = ' , wrong_pass_std           )
+    # print('pass_accuracy_std        = ' , pass_accuracy_std        )
+    # print('pass_in_length_std       = ' , pass_in_length_std       )
+    # print('pass_in_width_std        = ' , pass_in_width_std        )
+    # print('on_target_shoot_std      = ' , on_target_shoot_std      )
+    # print('off_target_shoot_std     = ' , off_target_shoot_std     )
+    # print('shoot_in_length_std      = ' , shoot_in_length_std      )
+    # print('shoot_in_width_std       = ' , shoot_in_width_std       )
+    # print('shoot_accuracy_std       = ' , shoot_accuracy_std       )
+    # print('used_stamina_agents_std  = ' , used_stamina_agents_std  )
+    # print('team_moved_distance_std  = ' , team_moved_distance_std  )
+    # print('average_distance_10p_std = ' , average_distance_10p_std )
+    # print('average_stamina_10p_std  = ' , average_stamina_10p_std  )
+    # print('av_st_per_dist_10p_std   = ' , av_st_per_dist_10p_std   )
+    # print('used_per_distance_std    = ' , used_per_distance_std    )
 
     print('winrate                  = ', winrate)
 
