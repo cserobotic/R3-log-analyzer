@@ -213,7 +213,7 @@ for myargs in sys.argv[1:]:
         winrate = win_cnt/ctr
         
         print('################### AVERAGES')
-        print('our_goals_avg            = ' , ally_goals_avg           )
+        print('our_goals_avg            = ' , our_goals_avg           )
         print('opp_goals_avg            = ' , opp_goals_avg            )
         print('possession_avg           = ' , possession_avg           )
         print('correct_pass_avg         = ' , correct_pass_avg         )
