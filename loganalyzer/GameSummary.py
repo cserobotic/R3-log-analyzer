@@ -110,7 +110,7 @@ for myargs in sys.argv[1:]:
         pass_accuracy_avg   = df['pass_accuracy'].mean()
         print('correct_pass_avg  = ', correct_pass_avg )
         print('wrong_pass_avg    = ', wrong_pass_avg   )
-        print('pass_accuracy_avg = ', pass_accuracy_avg)
+        print('pass_accuracy_avg = ', pass_accuracy_avg, end='\033[F\033[F\033[F\033[F\033[F')
         # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
     print(df)
