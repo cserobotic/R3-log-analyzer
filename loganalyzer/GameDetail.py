@@ -14,7 +14,7 @@ for myargs in sys.argv[1:]:
     df = pd.DataFrame(columns=
                        ["name,"
                         "status",
-                        "ally_goals",
+                        "our_goals",
                         "opp_goals",
                         "possession",
                         "pass_accuracy",
@@ -59,7 +59,7 @@ for myargs in sys.argv[1:]:
         team_r = {
             "name"                  : analyzer.game.right_team.name,
             "status"                : analyzer.status_r,
-            "ally_goals"            : analyzer.game.right_goal,
+            "our_goals"            : analyzer.game.right_goal,
             "opp_goals"             : analyzer.game.left_goal,
             "possession"            : analyzer.possession_r,
             "pass_accuracy"         : analyzer.pass_accuracy_r,
@@ -83,7 +83,7 @@ for myargs in sys.argv[1:]:
         team_l = {
             "name"                  : analyzer.game.left_team.name,
             "status"                : analyzer.status_l,
-            "ally_goals"            : analyzer.game.left_goal,
+            "our_goals"            : analyzer.game.left_goal,
             "opp_goals"             : analyzer.game.right_goal,
             "possession"            : analyzer.possession_l,
             "pass_accuracy"         : analyzer.pass_accuracy_l,
@@ -170,7 +170,7 @@ for myargs in sys.argv[1:]:
         print('\n')
 
 
-        our_goals_avg            = df['ally_goals'           ].mean()
+        our_goals_avg            = df['our_goals'            ].mean()
         opp_goals_avg            = df['opp_goals'            ].mean()
         possession_avg           = df['possession'           ].mean()
         correct_pass_avg         = df['correct_pass'         ].mean()
@@ -190,7 +190,7 @@ for myargs in sys.argv[1:]:
         av_st_per_dist_10p_avg   = df['av_st_per_dist_10p'   ].mean()
         used_per_distance_avg    = df['used_per_distance'    ].mean()
         
-        our_goals_std            = df['ally_goals'           ].std()
+        our_goals_std            = df['our_goals'            ].std()
         opp_goals_std            = df['opp_goals'            ].std()
         possession_std           = df['possession'           ].std()
         correct_pass_std         = df['correct_pass'         ].std()
@@ -255,13 +255,12 @@ for myargs in sys.argv[1:]:
         print('used_per_distance_std    = ' , used_per_distance_std    )
 
         print('winrate           = ', winrate)
-        # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
     print(df)
     print('#################################################')
     print('directory finished and the report is as follows: ')
 
-    our_goals_avg            = df['ally_goals'           ].mean()
+    our_goals_avg            = df['our_goals'            ].mean()
     opp_goals_avg            = df['opp_goals'            ].mean()
     possession_avg           = df['possession'           ].mean()
     correct_pass_avg         = df['correct_pass'         ].mean()
@@ -281,7 +280,7 @@ for myargs in sys.argv[1:]:
     av_st_per_dist_10p_avg   = df['av_st_per_dist_10p'   ].mean()
     used_per_distance_avg    = df['used_per_distance'    ].mean()
     
-    our_goals_std            = df['ally_goals'           ].std()
+    our_goals_std            = df['our_goals'            ].std()
     opp_goals_std            = df['opp_goals'            ].std()
     possession_std           = df['possession'           ].std()
     correct_pass_std         = df['correct_pass'         ].std()
@@ -304,7 +303,7 @@ for myargs in sys.argv[1:]:
     winrate = win_cnt/ctr
     
     print('################### AVERAGES')
-    print('our_goals_avg            = ' , ally_goals_avg           )
+    print('our_goals_avg            = ' , our_goals_avg            )
     print('opp_goals_avg            = ' , opp_goals_avg            )
     print('possession_avg           = ' , possession_avg           )
     print('correct_pass_avg         = ' , correct_pass_avg         )
@@ -324,8 +323,8 @@ for myargs in sys.argv[1:]:
     print('av_st_per_dist_10p_avg   ='  , av_st_per_dist_10p_avg   )
     print('used_per_distance_avg    ='  , used_per_distance_avg    )
 
-    print('################### stdIANCES')
-    print('our_goals_std            = ' , ally_goals_std           )
+    print('################### STANDARD DEVIATIONS')
+    print('our_goals_std            = ' , our_goals_std            )
     print('opp_goals_std            = ' , opp_goals_std            )
     print('possession_std           = ' , possession_std           )
     print('correct_pass_std         = ' , correct_pass_std         )
@@ -345,7 +344,7 @@ for myargs in sys.argv[1:]:
     print('av_st_per_dist_10p_std   = ' , av_st_per_dist_10p_std   )
     print('used_per_distance_std    = ' , used_per_distance_std    )
 
-    print('winrate           = ', winrate)
+    print('winrate                  = ', winrate)
 
     df.to_csv(myargs+'/details.csv')
 
