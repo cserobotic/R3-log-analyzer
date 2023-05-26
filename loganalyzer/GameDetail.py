@@ -253,8 +253,8 @@ for myargs in sys.argv[1:]:
         print('average_stamina_10p_std  = ' , average_stamina_10p_std  )
         print('av_st_per_dist_10p_std   = ' , av_st_per_dist_10p_std   )
         print('used_per_distance_std    = ' , used_per_distance_std    )
-
-        print('winrate           = ', winrate)
+        clear_outputs = '\033[F'*86
+        print('winrate           = ', winrate, end=clear_outputs)
         # print("on_target_shoot:"+str(analyzer.on_target_shoot_l))
 
     print(df)
