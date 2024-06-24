@@ -84,39 +84,62 @@ class Analyzer:
         self.average_distance_10p_l = 0
         self.av_st_per_dist_10p_l = 0
 
-    def draw_heatmap(self, right_team=False, left_team=True):
+    def draw_heatmap(self, right_team=False, left_team=True, csv_path='./'):
         import numpy as np
+        import pandas as pd
         import matplotlib.pyplot as plt
 
         world = np.zeros((110, 75))
+        
+        trackpos_df = pd.DataFrame(columns=['x1', 'y1',
+                                            'x2', 'y2',
+                                            'x3', 'y3',
+                                            'x4', 'y4',
+                                            'x5', 'y5',
+                                            'x6', 'y6',
+                                            'x7', 'y7',
+                                            'x8', 'y8',
+                                            'x9', 'y9',
+                                            'x10', 'y10',
+                                            'x11', 'y11',
+                                            'cycle', 'teamname', 'number'])
 
-        if(right_team ):
-            team =self.game.right_team.agents
-        elif(left_team):
-            team =self.game.left_team.agents
+        team =self.game.left_team
+        if(right_team):
+            team =self.game.right_team
         # for cycle in self.play_on_cycles:
         for cycle in self.play_on_cycles:
-            for agent in team:
+            print(cycle,' out of ' ,self.play_on_cycles[-1], ' cycles', end='\r')
+            for agent in team.agents:
                 if(agent.number != 1):
                     x = int(round(agent.data[cycle]['x'], 1))+52
                     y = int(round(agent.data[cycle]['y'], 1))+33
+                    y_name = 'x'+str(agent.number)
+                    x_name = 'y'+str(agent.number)
+                    trackpos_df = pd.concat([trackpos_df, pd.DataFrame({y_name:x,
+                                                                        x_name:y,
+                                                                        'cycle':cycle,
+                                                                        'teamname': team.name,
+                                                                        'number':agent.number}, index=[cycle])], axis=0)
                     for i in range(-4,5):
                         for j in range(-4,5):
                             try:
                                 world[x+i][y+j] += 5 - abs(j) 
                             except:
                                 continue
-        fig, ax = plt.subplots()
-        ax.set_xticks(np.arange(len([])))
-        ax.set_yticks(np.arange(len([])))
-        ax.set_xticklabels([])
-        ax.set_yticklabels([])
-        cbarlabel="Relative Frequency"
+                            
+        trackpos_df.to_csv(csv_path+'postrack_'+team.name+'.csv')
+        # fig, ax = plt.subplots()
+        # ax.set_xticks(np.arange(len([])))
+        # ax.set_yticks(np.arange(len([])))
+        # ax.set_xticklabels([])
+        # ax.set_yticklabels([])
+        # cbarlabel="Relative Frequency"
 
-        im = ax.imshow(np.fliplr(world).T, interpolation='gaussian')
-        cbar = ax.figure.colorbar(im, ax=ax )
-        cbar.ax.set_ylabel(cbarlabel, rotation=-90, va="bottom")
-        plt.show()
+        # im = ax.imshow(np.fliplr(world).T, interpolation='gaussian')
+        # cbar = ax.figure.colorbar(im, ax=ax )
+        # cbar.ax.set_ylabel(cbarlabel, rotation=-90, va="bottom")
+        # plt.show()
 
 
     def line_intersection(self,line1, line2):
@@ -223,12 +246,12 @@ class Analyzer:
     def update_possession(self, key):
         
         if(key in self.play_on_cycles and len(self.game.get_last_kickers(key))>0):
-           
+            
             for region in self.regions:
                 if(region.in_region(self.game.ball_pos[key]['x'],self.game.ball_pos[key]['y'])):
                     region.ball_in_region_cycles +=1
                     break
-                    
+
             for agent in (self.game.right_team.agents +self.game.left_team.agents ):
                 for region in agent.regions:
                     if(region.in_region(agent.data[key]['x'],agent.data[key]['y'])):
@@ -358,7 +381,6 @@ class Analyzer:
 
     def analyze(self):
         ''' pass, shoot, pass intercept, shot intercept, possesion ,  '''
-        
         for key in range(1,self.play_on_cycles[-1]+1):
             self.check_pass(key)
             self.check_shoot(key)
